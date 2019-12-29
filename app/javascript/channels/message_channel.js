@@ -1,4 +1,5 @@
 import consumer from "./consumer"
+import messageReader from "./read_message_channel";
 
 consumer.subscriptions.create("MessageChannel", {
   connected() {
@@ -11,7 +12,10 @@ consumer.subscriptions.create("MessageChannel", {
 
   received(data) {
     let messageContainer = document.querySelector("div.message-container");
-    messageContainer.innerHTML += data;
+    messageContainer.innerHTML += data.render;
     messageContainer.scrollIntoView(false);
+    setTimeout(function () {
+      messageReader.read(data.message_id)
+    }, 2000)
   }
 });

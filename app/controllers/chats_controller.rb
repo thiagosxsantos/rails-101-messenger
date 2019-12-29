@@ -10,5 +10,7 @@ class ChatsController < ApplicationController
     @messages = Message.where(sender: current_user, receiver: @user)
                     .or(Message.where(sender: @user, receiver: current_user))
                     .order(:created_at)
+
+    Message.bulk_read_from(@user)
   end
 end
